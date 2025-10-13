@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperScrollView.Runtime", "SuperScrollView.Runtime.csproj", "{67928aeb-3f9f-b5da-d85b-497019080c67}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{9e2145ad-b2ce-2070-ac1f-eb68111a3aa7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperScrollView.Editor", "SuperScrollView.Editor.csproj", "{775b1c8b-ddb7-0b94-c870-5bfafb88a9ce}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{67928aeb-3f9f-b5da-d85b-497019080c67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67928aeb-3f9f-b5da-d85b-497019080c67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9e2145ad-b2ce-2070-ac1f-eb68111a3aa7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9e2145ad-b2ce-2070-ac1f-eb68111a3aa7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{775b1c8b-ddb7-0b94-c870-5bfafb88a9ce}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{775b1c8b-ddb7-0b94-c870-5bfafb88a9ce}.Debug|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
