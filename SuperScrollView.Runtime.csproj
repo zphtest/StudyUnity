@@ -45,21 +45,21 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.54f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Packages\com.tuyoogame.superscrollview\Runtime\ListView\LoopListView2.cs" />
-    <Compile Include="Assets\Packages\com.tuyoogame.superscrollview\Runtime\Common\ClickEventListener.cs" />
-    <Compile Include="Assets\Packages\com.tuyoogame.superscrollview\Runtime\StaggeredGridView\LoopStaggeredGridViewItem.cs" />
-    <Compile Include="Assets\Packages\com.tuyoogame.superscrollview\Runtime\GridView\LoopGridView.cs" />
-    <Compile Include="Assets\Packages\com.tuyoogame.superscrollview\Runtime\ListView\LoopListViewItem2.cs" />
-    <Compile Include="Assets\Packages\com.tuyoogame.superscrollview\Runtime\StaggeredGridView\StaggeredGridItemGroup.cs" />
-    <Compile Include="Assets\Packages\com.tuyoogame.superscrollview\Runtime\ListView\LoopListItemPool.cs" />
-    <Compile Include="Assets\Packages\com.tuyoogame.superscrollview\Runtime\GridView\LoopGridViewItem.cs" />
-    <Compile Include="Assets\Packages\com.tuyoogame.superscrollview\Runtime\GridView\LoopGridItemPool.cs" />
-    <Compile Include="Assets\Packages\com.tuyoogame.superscrollview\Runtime\GridView\GridItemGroup.cs" />
-    <Compile Include="Assets\Packages\com.tuyoogame.superscrollview\Runtime\StaggeredGridView\LoopStaggeredGridView.cs" />
-    <Compile Include="Assets\Packages\com.tuyoogame.superscrollview\Runtime\Common\CommonDefine.cs" />
-    <Compile Include="Assets\Packages\com.tuyoogame.superscrollview\Runtime\StaggeredGridView\StaggeredGridItemPool.cs" />
-    <Compile Include="Assets\Packages\com.tuyoogame.superscrollview\Runtime\Common\ItemPosMgr.cs" />
-    <None Include="Assets\Packages\com.tuyoogame.superscrollview\Runtime\SuperScrollView.Runtime.asmdef" />
+    <Compile Include="Assets\Assets\Packages\com.tuyoogame.superscrollview\Runtime\ListView\LoopListView2.cs" />
+    <Compile Include="Assets\Assets\Packages\com.tuyoogame.superscrollview\Runtime\Common\ClickEventListener.cs" />
+    <Compile Include="Assets\Assets\Packages\com.tuyoogame.superscrollview\Runtime\GridView\LoopGridView.cs" />
+    <Compile Include="Assets\Assets\Packages\com.tuyoogame.superscrollview\Runtime\GridView\GridItemGroup.cs" />
+    <Compile Include="Assets\Assets\Packages\com.tuyoogame.superscrollview\Runtime\ListView\LoopListItemPool.cs" />
+    <Compile Include="Assets\Assets\Packages\com.tuyoogame.superscrollview\Runtime\StaggeredGridView\LoopStaggeredGridView.cs" />
+    <Compile Include="Assets\Assets\Packages\com.tuyoogame.superscrollview\Runtime\GridView\LoopGridItemPool.cs" />
+    <Compile Include="Assets\Assets\Packages\com.tuyoogame.superscrollview\Runtime\StaggeredGridView\StaggeredGridItemGroup.cs" />
+    <Compile Include="Assets\Assets\Packages\com.tuyoogame.superscrollview\Runtime\StaggeredGridView\LoopStaggeredGridViewItem.cs" />
+    <Compile Include="Assets\Assets\Packages\com.tuyoogame.superscrollview\Runtime\StaggeredGridView\StaggeredGridItemPool.cs" />
+    <Compile Include="Assets\Assets\Packages\com.tuyoogame.superscrollview\Runtime\GridView\LoopGridViewItem.cs" />
+    <Compile Include="Assets\Assets\Packages\com.tuyoogame.superscrollview\Runtime\Common\ItemPosMgr.cs" />
+    <Compile Include="Assets\Assets\Packages\com.tuyoogame.superscrollview\Runtime\ListView\LoopListViewItem2.cs" />
+    <Compile Include="Assets\Assets\Packages\com.tuyoogame.superscrollview\Runtime\Common\CommonDefine.cs" />
+    <None Include="Assets\Assets\Packages\com.tuyoogame.superscrollview\Runtime\SuperScrollView.Runtime.asmdef" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.54f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
