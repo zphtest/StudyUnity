@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638945648201261735
-    m_Hash: 565120548
+      ticks: 638962856778378476
+    m_Hash: 328020453
   m_LockFileStatus:
     m_FilePath: C:/unityProject/Demo/StudyUnity/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638945648201317268
-    m_Hash: 2789170976
+      ticks: 638962856778378476
+    m_Hash: 1117627345
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_LocalPackages:
@@ -412,6 +412,7 @@ m_ResolvedPackages:
     - 3.2.0-pre.11
     - 3.2.0-pre.12
     - 3.2.0-pre.13
+    - 3.2.0-pre.14
     - 4.0.0-pre.1
     - 4.0.0-pre.2
     compatible:
@@ -431,6 +432,7 @@ m_ResolvedPackages:
     - 3.2.0-pre.11
     - 3.2.0-pre.12
     - 3.2.0-pre.13
+    - 3.2.0-pre.14
     - 4.0.0-pre.1
     - 4.0.0-pre.2
     recommended: 3.0.9
