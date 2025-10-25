@@ -23,7 +23,7 @@ namespace SuperScrollView
         public float mDistanceForNew0 = 200;
         public float mDistanceForRecycle1 = 300;//mDistanceForRecycle1 should be larger than mDistanceForNew1
         public float mDistanceForNew1 = 200;
-        public float mItemDefaultWithPaddingSize = 20;//item's default size (with padding)
+        public float mItemDefaultWithPaddingSize = 100;//item's default size (with padding)
 
         public static StaggeredGridViewInitParam CopyDefaultInitParam()
         {
@@ -98,7 +98,7 @@ namespace SuperScrollView
 
         RectTransform mScrollRectTransform = null;
         RectTransform mViewPortRectTransform = null;
-        float mItemDefaultWithPaddingSize = 20;
+        float mItemDefaultWithPaddingSize = 100;
         int mItemTotalCount = 0;
         bool mIsVertList = false;
         System.Func<LoopStaggeredGridView, int,LoopStaggeredGridViewItem> mOnGetItemByItemIndex;

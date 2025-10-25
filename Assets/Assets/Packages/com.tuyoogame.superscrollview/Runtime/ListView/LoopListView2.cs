@@ -27,7 +27,7 @@ namespace SuperScrollView
         public float mSmoothDumpRate = 0.3f;
         public float mSnapFinishThreshold = 0.01f;
         public float mSnapVecThreshold = 145;
-        public float mItemDefaultWithPaddingSize = 20;//item's default size (with padding)
+        public float mItemDefaultWithPaddingSize = 100;//item's default size (with padding)
 
         public static LoopListViewInitParam CopyDefaultInitParam()
         {
@@ -313,8 +313,14 @@ namespace SuperScrollView
                 Debug.LogError("ScrollRect.verticalScrollbarVisibility cannot be set to AutoHideAndExpandViewport");
             }
             mIsVertList = (mArrangeType == ListItemArrangeType.TopToBottom || mArrangeType == ListItemArrangeType.BottomToTop);
-            mScrollRect.horizontal = !mIsVertList;
-            mScrollRect.vertical = mIsVertList;
+            if(mIsVertList)
+            {
+                mScrollRect.vertical = true;
+            }
+            else
+            {
+                mScrollRect.horizontal = true;
+            }
             SetScrollbarListener();
             AdjustPivot(mViewPortRectTransform);
             AdjustAnchor(mContainerTrans);

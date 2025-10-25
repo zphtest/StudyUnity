@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 namespace SuperScrollView
 {
     public class ItemPool
@@ -73,7 +72,6 @@ namespace SuperScrollView
                 }
             }
             tItem.Padding = mPadding;
-            tItem.ItemId = mCurItemIdCount;
             return tItem;
 
         }
