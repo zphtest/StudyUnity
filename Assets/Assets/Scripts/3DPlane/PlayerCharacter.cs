@@ -10,7 +10,7 @@ public class PlayerCharacter : MonoBehaviour
     public float moveSpeed = 5f;          // 移动速度
     public float jumpHeight = 0.8f;       // 跳跃高度
     public float rotationSpeed = 15f;     // 旋转速度
-    public float hoverHeight = 2f;        // 悬浮高度（调整这个值！）
+    public float hoverHeight = 0.2f;        // 悬浮高度（调整这个值！）
     
     [Header("调试")]
     public bool showDebug = true;
