@@ -931,8 +931,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95256bf5e8fd8264dbec382dd91a2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DoTest: 0
-  RedPointCount: 0
 --- !u!1 &1332619803
 GameObject:
   m_ObjectHideFlags: 0
@@ -1143,11 +1141,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09eee64f601e76e4e8ec46de723123f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _staticPath: BtnEvents
-  DotObj: {fileID: 1332619803}
-  NewObj: {fileID: 863363347}
-  CountText: {fileID: 1399608623}
-  CountBg: {fileID: 1384792005}
+  _staticKeyName: 
+  _dotObj: {fileID: 1332619803}
+  _newObj: {fileID: 863363347}
+  _countText: {fileID: 1399608623}
+  _countBg: {fileID: 1384792005}
 --- !u!1 &1384792005
 GameObject:
   m_ObjectHideFlags: 0
@@ -1545,11 +1543,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09eee64f601e76e4e8ec46de723123f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _staticPath: BtnEvents.Christmas.BtnClick
-  DotObj: {fileID: 380311283}
-  NewObj: {fileID: 1751918681}
-  CountText: {fileID: 489448111}
-  CountBg: {fileID: 15135852}
+  _staticKeyName: 
+  _dotObj: {fileID: 0}
+  _newObj: {fileID: 0}
+  _countText: {fileID: 0}
+  _countBg: {fileID: 0}
 --- !u!114 &1462281753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1607,7 +1605,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7176471, g: 0.24313726, b: 0.02745098, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1682,11 +1680,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09eee64f601e76e4e8ec46de723123f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _staticPath: 
-  DotObj: {fileID: 0}
-  NewObj: {fileID: 0}
-  CountText: {fileID: 0}
-  CountBg: {fileID: 0}
+  _staticKeyName: 
+  _dotObj: {fileID: 0}
+  _newObj: {fileID: 0}
+  _countText: {fileID: 0}
+  _countBg: {fileID: 0}
 --- !u!114 &1578070897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1911,11 +1909,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09eee64f601e76e4e8ec46de723123f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _staticPath: BtnEvents.Christmas
-  DotObj: {fileID: 0}
-  NewObj: {fileID: 0}
-  CountText: {fileID: 0}
-  CountBg: {fileID: 0}
+  _staticKeyName: 
+  _dotObj: {fileID: 0}
+  _newObj: {fileID: 0}
+  _countText: {fileID: 0}
+  _countBg: {fileID: 0}
 --- !u!1 &1751918681
 GameObject:
   m_ObjectHideFlags: 0
@@ -2139,11 +2137,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09eee64f601e76e4e8ec46de723123f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _staticPath: 
-  DotObj: {fileID: 0}
-  NewObj: {fileID: 0}
-  CountText: {fileID: 0}
-  CountBg: {fileID: 0}
+  _staticKeyName: 
+  _dotObj: {fileID: 0}
+  _newObj: {fileID: 0}
+  _countText: {fileID: 0}
+  _countBg: {fileID: 0}
 --- !u!1 &1963847089
 GameObject:
   m_ObjectHideFlags: 0

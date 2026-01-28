@@ -1,85 +1,139 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEngine;
 
 namespace StudyUnity
 {
     public class RedDotManager : Singleton<RedDotManager>
     {
-        // 扁平化存储所有节点，方便O(1)查找
-        private Dictionary<string, RedDotNode> _allNodes = new Dictionary<string, RedDotNode>();
-    
-        // 根节点
-        public RedDotNode Root { get; private set; }
+        private Dictionary<int, RedDotNode> _allNodes = new Dictionary<int, RedDotNode>();
 
-        // 注册节点：构建树结构
-        // 路径示例: "Main.Alliance.Tech"
-        public RedDotNode RegisterNode(string path)
+        /// <summary>
+        /// 获取或创建节点
+        /// </summary>
+        public RedDotNode GetNode(int key)
         {
-            if (_allNodes.ContainsKey(path)) return _allNodes[path];
-
-            var node = new RedDotNode { Path = path };
-            _allNodes.Add(path, node);
-
-            // 自动寻找或创建父节点
-            int lastDotIndex = path.LastIndexOf('.');
-            if (lastDotIndex != -1)
+            if (!_allNodes.TryGetValue(key, out var node))
             {
-                string parentPath = path.Substring(0, lastDotIndex);
-                var parentNode = RegisterNode(parentPath); // 递归注册父节点
-            
-                node.Parent = parentNode;
-                parentNode.Children.Add(node);
+                node = new RedDotNode(key);
+                _allNodes.Add(key, node);
             }
-
             return node;
         }
 
-        // 设置叶子节点的值（业务逻辑调用）
-        public void SetNodeValue(string path, RedDotType type, int count = 0)
-        {
-            var node = GetNode(path);
-            if (node == null) return; // 容错，或者自动注册
-
-            // 避免重复计算
-            if (node.Data.Type == type && node.Data.Count == count) return;
-
-            node.Data.Type = type;
-            node.Data.Count = count;
-        
-            // 触发向上渗透
-            node.CheckState(); 
-        }
-        
         /// <summary>
-        /// 移除节点及其所有子节点
+        /// 建立父子关系（带环形检测）
         /// </summary>
-        public void RemoveNode(string path)
+        /// <param name="childKey">子节点Key</param>
+        /// <param name="parentKey">父节点Key</param>
+        /// <param name="mode">父节点的聚合模式</param>
+        /// <returns>返回子节点对象，方便链式操作</returns>
+        public RedDotNode Link(int childKey, int parentKey, EAggregatorMode mode = EAggregatorMode.AnyToDot)
         {
-            if (!_allNodes.TryGetValue(path, out var node)) return;
-
-            // 递归移除：先移除所有子孙节点
-            // 必须倒序遍历或者使用副本，因为移除过程会改变集合
-            for (int i = node.Children.Count - 1; i >= 0; i--)
+            // 1. 基本参数检查
+            if (childKey == parentKey)
             {
-                var child = node.Children[i];
-                RemoveNode(child.Path); // 递归调用
+                Debug.LogError($"[RedDot] Self-Cycle detected: Node {childKey} cannot act as its own parent.");
+                return GetNode(childKey);
             }
 
-            // 从父节点断开引用 (双向清理)
+            var child = GetNode(childKey);
+            var parent = GetNode(parentKey);
+
+            // 2. 如果关系没变，仅更新模式直接返回
+            if (child.Parent == parent)
+            {
+                if (parent.Aggregator != mode)
+                {
+                    parent.Aggregator = mode;
+                    parent.MarkDirty(); // 模式变了，父节点需要重算
+                }
+                return child;
+            }
+
+            // 3. 【重要】死循环检测：检查 parent 是否是 child 的后代
+            if (IsAncestor(child, parent)) // 意思是：child 是 parent 的祖先吗？
+            {
+                Debug.LogError($"[RedDot] Circular dependency detected: Cannot set {parentKey} as parent of {childKey}, because {childKey} is already an ancestor of {parentKey}.");
+                return child;
+            }
+
+            // 4. 断开旧连接
+            if (child.Parent != null)
+            {
+                child.Parent.Children.Remove(child);
+                child.Parent.MarkDirty(); // 旧父亲也要重算
+            }
+
+            // 5. 建立新连接
+            child.Parent = parent;
+            if (!parent.Children.Contains(child))
+            {
+                parent.Children.Add(child);
+            }
+
+            // 6. 更新父节点设置
+            parent.Aggregator = mode;
+            parent.MarkDirty(); // 新父亲重算
+
+            return child;
+        }
+
+        /// <summary>
+        /// 移除节点及其所有子节点 (防止内存泄漏)
+        /// </summary>
+        public void RemoveNode(int key)
+        {
+            if (!_allNodes.TryGetValue(key, out var node)) return;
+
+            // 1. 递归移除所有子孙节点
+            // 倒序遍历，因为RemoveNode会修改集合
+            for (int i = node.Children.Count - 1; i >= 0; i--)
+            {
+                RemoveNode(node.Children[i].Key);
+            }
+
+            // 2. 从父节点中断开
             if (node.Parent != null)
             {
                 node.Parent.Children.Remove(node);
+                node.Parent.MarkDirty(); // 父节点需要刷新状态
                 node.Parent = null;
             }
 
-            // 最后：从全局字典中移除自己
-            _allNodes.Remove(path);
+            // 3. 从全局字典移除
+            _allNodes.Remove(key);
         }
-    
-        public RedDotNode GetNode(string path)
+
+        /// <summary>
+        /// 设置叶子节点数据
+        /// </summary>
+        public void SetData(int key, ERedDotType type, int count = 0)
         {
-            _allNodes.TryGetValue(path, out var node);
-            return node;
+            GetNode(key).SetData(type, count);
+        }
+
+        // --- 辅助方法 ---
+
+        /// <summary>
+        /// 检查 potentialAncestor 是否是 startNode 的祖先
+        /// (用于防止 A->B->A 的死循环)
+        /// </summary>
+        private bool IsAncestor(RedDotNode potentialAncestor, RedDotNode startNode)
+        {
+            var current = startNode;
+            int safetyCount = 0;
+            
+            while (current != null)
+            {
+                if (current == potentialAncestor) return true;
+                
+                current = current.Parent;
+                
+                // 极端情况下的安全阀，防止链条过长卡死
+                if (++safetyCount > 1000) break; 
+            }
+            return false;
         }
     }
 }

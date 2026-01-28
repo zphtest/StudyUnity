@@ -1,109 +1,176 @@
 using System;
 using System.Collections.Generic;
-
+using UnityEngine;
 
 namespace StudyUnity
 {
     public class RedDotNode
     {
-        public string Path; // 节点路径，如 "Main/Alliance/Tech"
-        public int PathHash;
-        public RedDotData Data = new RedDotData();
-    
-        public RedDotNode Parent;
-        public List<RedDotNode> Children = new List<RedDotNode>();
-    
-        // 这里的回调专门给UI组件注册，当数据变动时通知UI刷新
-        public Action<RedDotData> OnChange; 
-        
-        // 标记位：用于差量更新
-        public bool IsVisited = false; 
+        public int Key { get; private set; }
+        public RedDotNode Parent { get; set; }
+        public List<RedDotNode> Children { get; } = new List<RedDotNode>();
 
-        // 核心逻辑：子节点变化触发父节点重新计算
-        public void CheckState()
+        // 节点本身的原始数据（通常叶子节点才有值）
+        private RedDotData _selfData = RedDotData.Empty;
+
+        // 经过计算后的最终数据（供 UI 显示）
+        public RedDotData FinalData { get; private set; } = RedDotData.Empty;
+
+        // 聚合模式
+        public EAggregatorMode Aggregator { get; set; } = EAggregatorMode.AnyToDot;
+
+        // 辅助字段：用于动态遍历时的标记
+        public bool IsVisited;
+
+        // UI 监听事件
+        public event Action<RedDotData> OnChange;
+
+        public RedDotNode(int key)
         {
-            // 如果是叶子节点，状态由具体的业务逻辑Set进来，不需要计算
-            if (Children.Count == 0) 
+            Key = key;
+        }
+
+        /// <summary>
+        /// 设置该节点自身的红点数据
+        /// </summary>
+        public void SetData(ERedDotType type, int count)
+        {
+            var newData = new RedDotData { Type = type, Count = count };
+            if (_selfData != newData)
             {
-                NotifyChange();
+                _selfData = newData;
+                MarkDirty(); // 数据变了，标记脏更新
+            }
+        }
+
+        /// <summary>
+        /// 标记脏，重新计算并通知父节点
+        /// </summary>
+        public void MarkDirty()
+        {
+            var oldFinal = FinalData;
+
+            CalculateFinalData();
+
+            // 如果计算结果变了，通知 UI 并向上传递
+            if (oldFinal != FinalData)
+            {
+                OnChange?.Invoke(FinalData);
+                Parent?.MarkDirty();
+            }
+        }
+
+        /// <summary>
+        /// 核心算法：根据子节点计算 FinalData
+        /// </summary>
+        private void CalculateFinalData()
+        {
+            // 1. 如果是叶子节点，FinalData 就是 SelfData
+            if (Children.Count == 0)
+            {
+                FinalData = _selfData;
                 return;
             }
 
-            // 如果是中间节点，状态由所有子节点聚合而来
-            int totalCount = 0;
-            bool hasNew = false;
-            bool hasDot = false;
+            // 2. 如果是非叶子节点，根据 AggregatorMode 聚合子节点数据
+            // 注意：非叶子节点的 _selfData 通常会被忽略
 
-            foreach (var child in Children)
+            if (Aggregator == EAggregatorMode.SumCount)
             {
-                if (child.Data.Type == RedDotType.Number) totalCount += child.Data.Count;
-                if (child.Data.Type == RedDotType.New) hasNew = true;
-                if (child.Data.Type == RedDotType.Dot) hasDot = true;
+                CalculateSumCount();
+            }
+            else if (Aggregator == EAggregatorMode.PassThrough)
+            {
+                CalculatePassThrough();
+            }
+            else // Default: AnyToDot
+            {
+                CalculateAnyToDot();
+            }
+        }
+
+        // --- 具体聚合策略 ---
+
+        private void CalculateAnyToDot()
+        {
+            bool hasAny = false;
+            for (int i = 0; i < Children.Count; i++)
+            {
+                if (Children[i].FinalData.Type != ERedDotType.None)
+                {
+                    hasAny = true;
+                    break;
+                }
             }
 
-            // 聚合规则（根据你的需求定制）
+            FinalData = hasAny
+                ? new RedDotData { Type = ERedDotType.Dot, Count = 0 }
+                : RedDotData.Empty;
+        }
+
+        private void CalculateSumCount()
+        {
+            int total = 0;
+            bool hasAny = false;
+
+            for (int i = 0; i < Children.Count; i++)
+            {
+                var data = Children[i].FinalData;
+                if (data.Type != ERedDotType.None)
+                {
+                    hasAny = true;
+                    // 如果子节点有数字则加数字，否则（如只有小红点）算1个
+                    total += (data.Count > 0 ? data.Count : 1);
+                }
+            }
+
+            FinalData = hasAny
+                ? new RedDotData { Type = ERedDotType.Number, Count = total }
+                : RedDotData.Empty;
+        }
+
+        private void CalculatePassThrough()
+        {
+            bool hasNew = false;
+            bool hasNumber = false;
+            bool hasDot = false;
+            int totalNum = 0;
+
+            for (int i = 0; i < Children.Count; i++)
+            {
+                var data = Children[i].FinalData;
+                switch (data.Type)
+                {
+                    case ERedDotType.New:
+                        hasNew = true;
+                        break;
+                    case ERedDotType.Number:
+                        hasNumber = true;
+                        totalNum += data.Count;
+                        break;
+                    case ERedDotType.Dot:
+                        hasDot = true;
+                        break;
+                }
+            }
+
+            // 优先级：New > Number > Dot > None
             if (hasNew)
             {
-                Data.Type = RedDotType.New;
+                FinalData = new RedDotData { Type = ERedDotType.New, Count = 0 };
             }
-            else if (totalCount > 0)
+            else if (hasNumber)
             {
-                Data.Type = RedDotType.Number;
-                Data.Count = totalCount;
+                FinalData = new RedDotData { Type = ERedDotType.Number, Count = totalNum };
             }
             else if (hasDot)
             {
-                Data.Type = RedDotType.Dot;
+                FinalData = new RedDotData { Type = ERedDotType.Dot, Count = 0 };
             }
             else
             {
-                Data.Type = RedDotType.None;
+                FinalData = RedDotData.Empty;
             }
-
-            NotifyChange();
-        }
-
-        private void NotifyChange()
-        {
-            // 1. 通知绑定的UI刷新
-            OnChange?.Invoke(Data);
-        
-            // 2. 递归通知父节点检查状态 (关键：层层渗透)
-            Parent?.CheckState();
-        }
-        
-        // 准备更新，把所有子节点标记为“未访问”
-        public void BeginUpdateChildren()
-        {
-            foreach (var child in Children)
-            {
-                child.IsVisited = false;
-            }
-        }
-        
-        public void EndUpdateChildren()
-        {
-            // 反向遍历以便安全移除
-            for (int i = Children.Count - 1; i >= 0; i--)
-            {
-                var child = Children[i];
-                if (!child.IsVisited)
-                {
-                    // 这里执行真正的移除逻辑
-                    // 1. 从管理器的全局字典里移除 (防止下次 Register 又找回来)
-                    RedDotManager.Instance.RemoveNode(child.Path); 
-            
-                    // 2. 从当前子节点列表移除
-                    Children.RemoveAt(i);
-            
-                    // 3. 断开引用
-                    child.Parent = null;
-                }
-            }
-    
-            // 移除完后，重新聚合一次状态，确保父节点状态正确
-            CheckState();
         }
     }
 }
-

@@ -6,67 +6,80 @@ namespace StudyUnity
 {
     public class RedDotComponent : MonoBehaviour
     {
-        [SerializeField] private string _staticPath; // Inspector里填写的静态路径，例如 "Main.Bag"
-        private string _runtimePath; // 运行时确定的实际路径
+        [Tooltip("静态节点名称(可选)")]
+        [SerializeField] private string _staticKeyName;
+        
+        // UI 引用
+        [Header("UI Elements")]
+        [SerializeField] private GameObject _dotObj;   // 普通圆点
+        [SerializeField] private GameObject _newObj;   // New 标签
+        [SerializeField] private TextMeshProUGUI _countText;      // 数字文本
+        [SerializeField] private GameObject _countBg;  // 数字背景
 
-        // 拖拽引用
-        public GameObject DotObj;
-        public GameObject NewObj;
-        public TextMeshProUGUI CountText;
-        public GameObject CountBg;
+        private int _targetKey;
+        private bool _isRegistered;
 
-        private void Start()
+        private void Awake()
         {
-            if (!string.IsNullOrEmpty(_staticPath))
+            if (!string.IsNullOrEmpty(_staticKeyName))
             {
-                SetPath(_staticPath);
+                SetKey(Animator.StringToHash(_staticKeyName));
             }
         }
-        
-        // 2. 动态节点：提供API供外部调用 (关键!)
-        // 在代码里 Instantiate 页签后，立即调用这个方法
-        public void SetPath(string path)
-        {
-            // 如果之前注册过，先反注册（防止复用Item时的Bug）
-            Unregister();
 
-            _runtimePath = path;
-        
-            var node = RedDotManager.Instance.RegisterNode(path);
-            RefreshView(node.Data);
-            node.OnChange += RefreshView;
+        public void SetKey(int key)
+        {
+            if (_isRegistered) Unregister();
+            
+            _targetKey = key;
+            var node = RedDotManager.Instance.GetNode(key);
+            
+            // 首次刷新
+            Refresh(node.FinalData);
+            
+            // 监听
+            node.OnChange += Refresh;
+            _isRegistered = true;
         }
-        
+
         private void Unregister()
         {
-            if (string.IsNullOrEmpty(_runtimePath)) return;
-            var node = RedDotManager.Instance.GetNode(_runtimePath);
-            if (node != null) node.OnChange -= RefreshView;
+            if (!_isRegistered) return;
+            var node = RedDotManager.Instance.GetNode(_targetKey);
+            if (node != null) node.OnChange -= Refresh;
+            _isRegistered = false;
         }
+        
+        private void OnDestroy() => Unregister();
 
-        private void OnDestroy()
+        // 根据 Data 决定显示哪个子物体
+        private void Refresh(RedDotData data)
         {
-            Unregister();
-        }
+            // 1. 全部隐藏
+            if (_dotObj) _dotObj.SetActive(false);
+            if (_newObj) _newObj.SetActive(false);
+            if (_countBg) _countBg.SetActive(false);
 
-        private void RefreshView(RedDotData data)
-        {
-            // 隐藏所有
-            if(DotObj) DotObj.SetActive(false);
-            if(NewObj) NewObj.SetActive(false);
-            if(CountBg) CountBg.SetActive(false);
+            if (data.Type == ERedDotType.None) return;
 
+            // 2. 根据类型显示
             switch (data.Type)
             {
-                case RedDotType.Dot:
-                    if(DotObj) DotObj.SetActive(true);
+                case ERedDotType.Dot:
+                    if (_dotObj) _dotObj.SetActive(true);
                     break;
-                case RedDotType.New:
-                    if(NewObj) NewObj.SetActive(true);
+
+                case ERedDotType.New:
+                    if (_newObj) _newObj.SetActive(true);
                     break;
-                case RedDotType.Number:
-                    if(CountBg) CountBg.SetActive(true);
-                    if(CountText) CountText.text = data.Count > 99 ? "99+" : data.Count.ToString();
+
+                case ERedDotType.Number:
+                    if (_countBg) _countBg.SetActive(true);
+                    if (_countText) 
+                    {
+                        // 超过99显示99+
+                        _countText.text = data.Count > 99 ? "99+" : data.Count.ToString();
+                    }
                     break;
             }
         }
