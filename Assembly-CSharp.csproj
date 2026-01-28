@@ -48,6 +48,7 @@
     <Compile Include="Assets\SuperScrollView\Demo\Scripts\ButtonPanel\ButtonPanel.cs" />
     <Compile Include="Assets\SuperScrollView\Demo\Scripts\Item\SimpleItemList.cs" />
     <Compile Include="Assets\SuperScrollView\Demo\Scripts\Item\IconItem.cs" />
+    <Compile Include="Assets\Assets\Scripts\Notification\NotificationInitializer.cs" />
     <Compile Include="Assets\SuperScrollView\Demo\Scripts\DataSource\ExpandAnimationType.cs" />
     <Compile Include="Assets\SuperScrollView\Demo\Scripts\Item\NestedSimpleLeftRightItem.cs" />
     <Compile Include="Assets\SuperScrollView\Demo\Scripts\ViewDemo\TreeView\TreeViewAddAndRemoveDemoScript.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="Assets\SuperScrollView\Demo\Scripts\Item\TreeViewSimpleItem.cs" />
     <Compile Include="Assets\SuperScrollView\Demo\Scripts\Item\SimpleLoadItem.cs" />
     <Compile Include="Assets\SuperScrollView\Demo\Scripts\ButtonPanel\ButtonPanelNestedSimple.cs" />
+    <Compile Include="Assets\Assets\Scripts\Notification\Android\AndroidNotificationManager.cs" />
     <Compile Include="Assets\SuperScrollView\Demo\Scripts\DataSource\ContentFitterItemData.cs" />
     <Compile Include="Assets\SuperScrollView\Demo\Scripts\ViewDemo\NestedView\NestedListViewTopToBottomDemoScript.cs" />
     <Compile Include="Assets\Assets\Scripts\DropDown\DropDownTest.cs" />
@@ -133,6 +135,7 @@
     <Compile Include="Assets\SuperScrollView\Demo\Scripts\ViewDemo\NestedView\NestedListViewLeftToRightDemoScript.cs" />
     <Compile Include="Assets\SuperScrollView\Demo\Scripts\ViewDemo\GridView\GridViewDemoScript.cs" />
     <Compile Include="Assets\SuperScrollView\Demo\Scripts\Item\IconTextDescItem.cs" />
+    <Compile Include="Assets\Assets\Scripts\Notification\TestNotification.cs" />
     <Compile Include="Assets\SuperScrollView\Demo\Scripts\ViewDemo\Chat\ChatViewDemoScript.cs" />
     <Compile Include="Assets\SuperScrollView\Demo\Scripts\ViewDemo\TreeView\TreeViewSimpleDemoScript.cs" />
     <Compile Include="Assets\SuperScrollView\Demo\Scripts\DataSource\AnimationType.cs" />
@@ -157,6 +160,7 @@
     <Compile Include="Assets\SuperScrollView\Demo\Scripts\ViewDemo\GridView\GridViewDiagonalSelectDeleteDemoScript.cs" />
     <Compile Include="Assets\Assets\Scripts\Toggle\TestToggle.cs" />
     <Compile Include="Assets\SuperScrollView\Demo\Scripts\ViewDemo\GridView\GridViewComplexDemoScript.cs" />
+    <Compile Include="Assets\Assets\Scripts\Notification\NotificationData.cs" />
     <Compile Include="Assets\SuperScrollView\Demo\Scripts\ViewDemo\StaggeredView\StaggeredViewSimpleLeftToRightDemoScript.cs" />
     <Compile Include="Assets\SuperScrollView\Demo\Scripts\ViewDemo\ListViewAnimation\ListViewDeleteAnimationDemoScript.cs" />
     <Compile Include="Assets\Assets\Scripts\RedPoint\RedDotManager.cs" />
@@ -206,6 +210,7 @@
     <Compile Include="Assets\SuperScrollView\Demo\Scripts\ViewDemo\ListView\ListViewTopToBottomDemoScript.cs" />
     <Compile Include="Assets\SuperScrollView\Demo\Scripts\Item\ImageItem.cs" />
     <Compile Include="Assets\SuperScrollView\Demo\Scripts\ButtonPanel\ButtonPanelNested.cs" />
+    <Compile Include="Assets\Assets\Scripts\Notification\NotificationManager.cs" />
     <Compile Include="Assets\SuperScrollView\Demo\Scripts\ButtonPanel\ButtonPanelSpecialLoad.cs" />
     <Compile Include="Assets\Assets\Scripts\UIManager\UIConfig.cs" />
     <Compile Include="Assets\SuperScrollView\Demo\Scripts\ViewDemo\GridView\GridViewSimpleFilterDemoScript.cs" />

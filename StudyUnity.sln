@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperScrollView.Runtime", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperScrollView.Editor", "SuperScrollView.Editor.csproj", "{775b1c8b-ddb7-0b94-c870-5bfafb88a9ce}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-firstpass", "Assembly-CSharp-firstpass.csproj", "{a9882d6c-0789-b279-dcad-07f72edb442a}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,6 +20,8 @@ Global
 		{67928aeb-3f9f-b5da-d85b-497019080c67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{775b1c8b-ddb7-0b94-c870-5bfafb88a9ce}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{775b1c8b-ddb7-0b94-c870-5bfafb88a9ce}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{a9882d6c-0789-b279-dcad-07f72edb442a}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{a9882d6c-0789-b279-dcad-07f72edb442a}.Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
