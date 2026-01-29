@@ -1,0 +1,17 @@
+{
+  "name": "com.studyunity.notifications",
+  "version": "1.0.0",
+  "displayName": "StudyUnity Notifications",
+  "description": "Android 本地通知系统 - 支持 App 关闭状态下的定时通知",
+  "unity": "2020.3",
+  "author": {
+    "name": "StudyUnity"
+  },
+  "samples": [
+    {
+      "displayName": "通知系统示例",
+      "description": "展示如何使用通知系统的示例场景和脚本",
+      "path": "Samples~/NotificationExample"
+    }
+  ]
+}
